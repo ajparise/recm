@@ -103,7 +103,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data.Entities
 	using System;
 	
 	
-	[Table(Name="UNFF.dbo.LOCKCONNECTIONS")]
+	[Table(Name="dbo.LOCKCONNECTIONS")]
 	[DataContract()]
 	public partial class LockConnection : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -428,7 +428,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data.Entities
 		}
 	}
 	
-	[Table(Name="UNFF.dbo.USERS")]
+	[Table(Name="dbo.USERS")]
 	[DataContract()]
 	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	{

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.Linq;
 using Parise.RaisersEdge.ConnectionMonitor.Data.Entities;
+using Parise.RaisersEdge.ConnectionMonitor;
 
 namespace DeveloperConsoler
 {
@@ -11,10 +12,13 @@ namespace DeveloperConsoler
     {
         static void Main(string[] args)
         {
-            Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext();
+            var settings = Monitor.LoadSettings();
+            Console.WriteLine(new String(settings.Select(a => string.Format("{0}: {1}\n", Enum.GetName(a.Key.GetType(), a.Key), a.Value)).SelectMany(a => a).ToArray()));
+
+            Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext(settings[MonitorSettings.DBConnectionString]);
 
             // Clean up dead connection locks - very important
-            db.ExecuteCommand("exec [UNFF].[dbo].[CleanupDeadConnectionLocks]");
+            db.ExecuteCommand("exec [dbo].[CleanupDeadConnectionLocks]");
 
             // Retrieve entire connection list from DB and order by idle time
             // ToList() forces LINQ to retrieve data from the server

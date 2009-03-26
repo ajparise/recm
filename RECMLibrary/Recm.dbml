@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="IntegrationProjects" EntityNamespace="Parise.RaisersEdge.ConnectionMonitor.Data.Entities" ContextNamespace="Parise.RaisersEdge.ConnectionMonitor.Data" Class="RecmDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=dayton;Integrated Security=True" SettingsObjectName="Parise.RaisersEdge.ConnectionMonitor.Properties.Settings" SettingsPropertyName="ServerConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="UNFF.dbo.LOCKCONNECTIONS" Member="LockConnections">
+  <Table Name="dbo.LOCKCONNECTIONS" Member="LockConnections">
     <Type Name="LockConnection">
       <Column Name="LOCKCONNECTIONSID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CONNECTIONID" Member="ConnectionID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
@@ -15,7 +15,7 @@
       <Association Name="sysprocess_LockConnection" Member="sysprocess" ThisKey="SQLProcessID" OtherKey="spid" Type="sysprocess" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="UNFF.dbo.USERS" Member="Users">
+  <Table Name="dbo.USERS" Member="Users">
     <Type Name="User">
       <Column Name="NAME" Member="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="USER_ID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

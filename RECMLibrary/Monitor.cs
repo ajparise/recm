@@ -107,7 +107,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor
         public static Dictionary<MonitorSettings, string> LoadSettings()
         {
             // Loads settings from app.config
-            return Enum.GetValues(typeof(MonitorSettings)).Cast<MonitorSettings>().ToDictionary(a => a, s => ConfigurationManager.AppSettings.Get(s.ToString()));
+            return Enum.GetValues(typeof(MonitorSettings)).Cast<MonitorSettings>().Where(s => s != MonitorSettings.Unknown).ToDictionary(a => a, s => ConfigurationManager.AppSettings.Get(s.ToString()));
         }
 
         /// <summary>
@@ -204,12 +204,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor
                     }
                 }
 
-                Log(logEntry, System.Diagnostics.EventLogEntryType.Information);
-
-                Settings = LoadSettings();
-                
-                // Update the interval if it's changed in the app.config
-                this._monitor.Interval = double.Parse(Settings[MonitorSettings.PollingInterval]);
+                Log(logEntry, System.Diagnostics.EventLogEntryType.Information);               
 
                 db.Dispose();
             }
