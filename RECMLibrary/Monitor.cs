@@ -188,9 +188,10 @@ namespace Parise.RaisersEdge.ConnectionMonitor
                             foreach (var process in freshProcess.RelatedProcesses)
                             {
                                 logEntry += "\tIssued kill " + process.spid + " -- " + process.program_name.Trim() + " -- " + process.status.Trim() + " -- " + process.IdleTimeFormatted("{h:D2}:{m:D2}:{s:D2}:{ms:D2}\n");
-                                
-                                                     //uncomment the line below to terminate a process.
-                                var killResult = -1;//db.ExecuteCommand("kill " + process.spid);
+                                                                
+                                var killResult = -1;
+                                //uncomment the line below to terminate a process.
+                                //killResult = db.ExecuteCommand("kill " + process.spid);
                                 
                                 logEntry += "\t\tResult: " + killResult + "\n";
                                 
