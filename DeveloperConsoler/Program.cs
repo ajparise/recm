@@ -59,7 +59,7 @@ namespace DeveloperConsoler
                         {
                             Console.WriteLine("\tkill " + process.spid + " -- " + process.program_name.Trim() + " -- " + process.status.Trim() + " -- " + process.IdleTimeFormatted("{h:D2}:{m:D2}:{s:D2}:{ms:D2}"));
                             //uncomment the line below to terminate a process.
-                            db.ExecuteCommand("kill " + process.spid);
+                            //db.ExecuteCommand("kill " + process.spid);
                         }
                     }
                     else

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -45,6 +46,7 @@
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -55,9 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LockConnectionPartial.cs">
+    <Compile Include="recmPartial.cs" />
+    <Compile Include="recmSettingPartial.cs" />
+    <Compile Include="sysprocessPartial.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Monitor.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -68,8 +73,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recm.dbml</DependentUpon>
     </Compile>
-    <Compile Include="RecmDataConnection.cs" />
-    <Compile Include="SqlDataConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

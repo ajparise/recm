@@ -27,19 +27,9 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=dayton;Integrated Security=True")]
-        public string UNFFConnectionString {
+        public string ServerConnectionString {
             get {
-                return ((string)(this["UNFFConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=dayton;Integrated Security=True")]
-        public string masterConnectionString {
-            get {
-                return ((string)(this["masterConnectionString"]));
+                return ((string)(this["ServerConnectionString"]));
             }
         }
     }

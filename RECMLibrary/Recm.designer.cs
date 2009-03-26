@@ -20,7 +20,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
 	using System.Linq.Expressions;
 	
 	
-	[System.Data.Linq.Mapping.DatabaseAttribute(Name="master")]
+	[System.Data.Linq.Mapping.DatabaseAttribute(Name="IntegrationProjects")]
 	public partial class RecmDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -40,7 +40,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
     #endregion
 		
 		public RecmDataContext() : 
-				base(global::Parise.RaisersEdge.ConnectionMonitor.Properties.Settings.Default.UNFFConnectionString, mappingSource)
+				base(global::Parise.RaisersEdge.ConnectionMonitor.Properties.Settings.Default.ServerConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
