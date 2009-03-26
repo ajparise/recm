@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RECMLibrary", "RECMLibrary\RECMLibrary.csproj", "{FA4B38C0-4E3E-4050-83D9-672542F97186}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RECMServiceSetup", "RECMServiceSetup\RECMServiceSetup.vdproj", "{65BCE8EA-6E2B-4082-A81D-C288B5A3E4E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveloperConsoler", "DeveloperConsoler\DeveloperConsoler.csproj", "{F275C8B8-0E85-41F5-86E0-238FBE61F70C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RECMService", "RECMService\RECMService.csproj", "{1F370C1A-655C-4943-A44A-D4C36BE6502E}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs10.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = RECMLibrary\\RECMLibrary.csproj
+		SccProjectName1 = RECMLibrary
+		SccLocalPath1 = RECMLibrary
+		SccProjectUniqueName2 = RECMServiceSetup\\RECMServiceSetup.vdproj
+		SccProjectName2 = RECMServiceSetup
+		SccLocalPath2 = RECMServiceSetup
+		SccProjectUniqueName3 = DeveloperConsoler\\DeveloperConsoler.csproj
+		SccProjectName3 = DeveloperConsoler
+		SccLocalPath3 = DeveloperConsoler
+		SccProjectUniqueName4 = RECMService\\RECMService.csproj
+		SccProjectName4 = RECMService
+		SccLocalPath4 = RECMService
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA4B38C0-4E3E-4050-83D9-672542F97186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4B38C0-4E3E-4050-83D9-672542F97186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4B38C0-4E3E-4050-83D9-672542F97186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4B38C0-4E3E-4050-83D9-672542F97186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65BCE8EA-6E2B-4082-A81D-C288B5A3E4E7}.Debug|Any CPU.ActiveCfg = Debug
+		{65BCE8EA-6E2B-4082-A81D-C288B5A3E4E7}.Release|Any CPU.ActiveCfg = Release
+		{F275C8B8-0E85-41F5-86E0-238FBE61F70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F275C8B8-0E85-41F5-86E0-238FBE61F70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F275C8B8-0E85-41F5-86E0-238FBE61F70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F275C8B8-0E85-41F5-86E0-238FBE61F70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F370C1A-655C-4943-A44A-D4C36BE6502E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F370C1A-655C-4943-A44A-D4C36BE6502E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F370C1A-655C-4943-A44A-D4C36BE6502E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F370C1A-655C-4943-A44A-D4C36BE6502E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

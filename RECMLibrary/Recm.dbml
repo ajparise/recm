@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="master" EntityNamespace="Parise.RaisersEdge.ConnectionMonitor.Data.Entities" ContextNamespace="Parise.RaisersEdge.ConnectionMonitor.Data" Class="RecmDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=dayton;Integrated Security=True" SettingsObjectName="Parise.RaisersEdge.ConnectionMonitor.Properties.Settings" SettingsPropertyName="UNFFConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="UNFF.dbo.LOCKCONNECTIONS" Member="LockConnections">
+    <Type Name="LockConnection">
+      <Column Name="LOCKCONNECTIONSID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CONNECTIONID" Member="ConnectionID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="MACHINENAME" Member="MachineName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="USER_ID" Member="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MODULENUM" Member="ModuleNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Member="Description" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="spid" Member="SQLProcessID" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="LOGIN_TIME" Member="LoginTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_LockConnection" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
+      <Association Name="sysprocess_LockConnection" Member="sysprocess" ThisKey="SQLProcessID" OtherKey="spid" Type="sysprocess" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="UNFF.dbo.USERS" Member="Users">
+    <Type Name="User">
+      <Column Name="NAME" Member="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="USER_ID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SUPERVISOR" Member="Supervisor" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="HASSUPERVISORRIGHTS" Member="HasSupervisorRights" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Logon" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="SID" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="UseRE7Authentication" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="UseWindowsAuthentication" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Association Name="User_LockConnection" Member="LockConnections" ThisKey="ID" OtherKey="UserID" Type="LockConnection" />
+    </Type>
+  </Table>
+  <Table Name="master.dbo.sysprocesses" Member="sysprocesses">
+    <Type Name="sysprocess">
+      <Column Name="spid" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="kpid" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="blocked" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="waittype" Type="System.Data.Linq.Binary" DbType="Binary(2) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="waittime" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="lastwaittype" Type="System.String" DbType="NChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="waitresource" Type="System.String" DbType="NChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="dbid" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="uid" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="cpu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="physical_io" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="memusage" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="login_time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="last_batch" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ecid" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="open_tran" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="sid" Type="System.Data.Linq.Binary" DbType="Binary(86) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="hostname" Type="System.String" DbType="NChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="program_name" Type="System.String" DbType="NChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="hostprocess" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="cmd" Type="System.String" DbType="NChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="nt_domain" Type="System.String" DbType="NChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="nt_username" Type="System.String" DbType="NChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="net_address" Type="System.String" DbType="NChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="net_library" Type="System.String" DbType="NChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="loginame" Type="System.String" DbType="NChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="context_info" Type="System.Data.Linq.Binary" DbType="Binary(128) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="sql_handle" Type="System.Data.Linq.Binary" DbType="Binary(20) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="stmt_start" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stmt_end" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="request_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="sysprocess_LockConnection" Member="LockConnections" ThisKey="spid" OtherKey="SQLProcessID" Type="LockConnection" />
+      <Association Name="sysprocess_sysprocess" Member="RelatedProcesses" ThisKey="hostname,loginame" OtherKey="hostname,loginame" Type="sysprocess" />
+      <Association Name="sysprocess_sysprocess" Member="ParentProcess" ThisKey="hostname,loginame" OtherKey="hostname,loginame" Type="sysprocess" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
