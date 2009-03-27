@@ -33,7 +33,10 @@
             // 
             // RECMService
             // 
-            this.ServiceName = "Service1";
+            this.AutoLog = false;
+            this.CanPauseAndContinue = true;
+            this.CanShutdown = true;
+            this.ServiceName = "RECM Service";
             ((System.ComponentModel.ISupportInitialize)(this.recmEventLog)).EndInit();
 
         }

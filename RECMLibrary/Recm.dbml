@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Name="IntegrationProjects" EntityNamespace="Parise.RaisersEdge.ConnectionMonitor.Data.Entities" ContextNamespace="Parise.RaisersEdge.ConnectionMonitor.Data" Class="RecmDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=dayton;Integrated Security=True" SettingsObjectName="Parise.RaisersEdge.ConnectionMonitor.Properties.Settings" SettingsPropertyName="ServerConnectionString" Provider="System.Data.SqlClient" />
+<Database Name="UNFF" EntityNamespace="Parise.RaisersEdge.ConnectionMonitor.Data.Entities" ContextNamespace="Parise.RaisersEdge.ConnectionMonitor.Data" Class="RecmDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=dayton;Initial Catalog=UNFF;Integrated Security=True" SettingsObjectName="Parise.RaisersEdge.ConnectionMonitor.Properties.Settings" SettingsPropertyName="ServerConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.LOCKCONNECTIONS" Member="LockConnections">
     <Type Name="LockConnection">
       <Column Name="LOCKCONNECTIONSID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -67,4 +67,7 @@
       <Association Name="sysprocess_sysprocess" Member="ParentProcess" ThisKey="hostname,loginame" OtherKey="hostname,loginame" Type="sysprocess" IsForeignKey="true" />
     </Type>
   </Table>
+  <Function Name="dbo.CleanupDeadConnectionLocks" Method="CleanupDeadConnectionLocks">
+    <Return Type="System.Int32" />
+  </Function>
 </Database>

@@ -20,7 +20,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
 	using System.Linq.Expressions;
 	
 	
-	[System.Data.Linq.Mapping.DatabaseAttribute(Name="IntegrationProjects")]
+	[System.Data.Linq.Mapping.DatabaseAttribute(Name="UNFF")]
 	public partial class RecmDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -91,6 +91,13 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
 			{
 				return this.GetTable<Parise.RaisersEdge.ConnectionMonitor.Data.Entities.sysprocess>();
 			}
+		}
+		
+		[Function(Name="dbo.CleanupDeadConnectionLocks")]
+		public int CleanupDeadConnectionLocks()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((int)(result.ReturnValue));
 		}
 	}
 }
