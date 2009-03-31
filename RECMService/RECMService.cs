@@ -105,6 +105,15 @@ namespace Parise.RaisersEdge.ConnectionMonitor
 
         protected override void OnShutdown()
         {
+            if (monitorThread != null)
+            {
+                if (monitor != null)
+                {
+                    monitor.StopMonitor();
+                }
+                monitorThread.Abort();
+            }
+
             Log("RECM Shutdown", EventLogEntryType.Information);
             base.OnShutdown();
         }

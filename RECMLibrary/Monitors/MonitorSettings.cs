@@ -58,6 +58,13 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
         /// <summary>
         /// The interval in seconds to check for idle connections
         /// </summary>
-        PollingInterval
+        PollingInterval,
+        ExcludedHosts,
+        ExcludedREUsers,
+        
+        EmailHost,
+        EmailFromAlias,
+        EmailNotifications,
+        EmailAddresses
     }
 }

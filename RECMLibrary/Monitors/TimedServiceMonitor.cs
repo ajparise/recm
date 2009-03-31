@@ -27,19 +27,16 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
             this._log = AppEventLog;
             loggingEnabled = this._log != null;
 
-            if (loggingEnabled)
-            {
-                base.CleanedUpDeadLocks += new OnCleanedUpDeadLocks(TimedREConnectionMonitor_CleanedUpDeadLocks);
-                base.CleaningUpDeadLocks += new DatabaseEvent(TimedREConnectionMonitor_CleaningUpDeadLocks);
-                base.ConnectedToDatabase += new DatabaseEvent(TimedREConnectionMonitor_ConnectedToDatabase);
-                base.ConnectingToDatabase += new OnConnectingToDatabase(TimedREConnectionMonitor_ConnectingToDatabase);
-                base.FreedConnection += new FreedConnectionEvent(TimedREConnectionMonitor_FreedConnection);
-                base.FreeingConnection += new FreeingConnectionEvent(TimedREConnectionMonitor_FreeingConnection);
-                base.StatusMessage += new OnStatusMessage(TimedREConnectionMonitor_StatusMessage);
-                base.GenericError += new ErrorEvent(TimedREConnectionMonitor_GenericError);
-                base.FreeingLock += new FreeingLockEvent(TimedREConnectionMonitor_FreeingLock);
-                base.SkippedFreeingConnection += new SkippedFreeingConnectionEvent(TimedREConnectionMonitor_SkippedFreeingConnection);
-            }
+            base.CleanedUpDeadLocks += new OnCleanedUpDeadLocks(TimedREConnectionMonitor_CleanedUpDeadLocks);
+            base.CleaningUpDeadLocks += new DatabaseEvent(TimedREConnectionMonitor_CleaningUpDeadLocks);
+            base.ConnectedToDatabase += new DatabaseEvent(TimedREConnectionMonitor_ConnectedToDatabase);
+            base.ConnectingToDatabase += new OnConnectingToDatabase(TimedREConnectionMonitor_ConnectingToDatabase);
+            base.FreedConnection += new FreedConnectionEvent(TimedREConnectionMonitor_FreedConnection);
+            base.FreeingConnection += new FreeingConnectionEvent(TimedREConnectionMonitor_FreeingConnection);
+            base.StatusMessage += new OnStatusMessage(TimedREConnectionMonitor_StatusMessage);
+            base.GenericError += new ErrorEvent(TimedREConnectionMonitor_GenericError);
+            base.FreeingLock += new FreeingLockEvent(TimedREConnectionMonitor_FreeingLock);
+            base.SkippedFreeingConnection += new SkippedFreeingConnectionEvent(TimedREConnectionMonitor_SkippedFreeingConnection);
 
             // Start the monitor
             this._monitor = new System.Timers.Timer();
@@ -111,7 +108,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
         void TimedREConnectionMonitor_ConnectingToDatabase(ref string connectionString)
         {
-            logBuffer.AppendFormat("\nDatabase Connection\n\tConnecting with: {0}\n", connectionString);
+            logBuffer.AppendFormat("Database Connection\n-----------------------\n\tConnecting with: {0}\n", connectionString);
         }
 
         void TimedREConnectionMonitor_ConnectedToDatabase(Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext db)
@@ -121,7 +118,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
         void TimedREConnectionMonitor_CleaningUpDeadLocks(Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext db)
         {
-            logBuffer.AppendFormat("\nDead Locks\n\tCleaning up dead locks for {0}\n", db.Connection.Database);
+            logBuffer.AppendFormat("\nDead Locks\n-----------------------\n\tCleaning up dead locks for {0}\n", db.Connection.Database);
         }
 
         void TimedREConnectionMonitor_CleanedUpDeadLocks(int result)
@@ -132,19 +129,56 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
         /*
          * Respond to the _Timer elapsed event.
          */
-        void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        public void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.FreeConnections();
+            var freed = this.FreeConnections();
 
-            Log(logBuffer.ToString(), EventLogEntryType.Information);
+            var fullLog = logBuffer.ToString();
+            logBuffer = new StringBuilder(); // Clear the log buffer
             
-            logBuffer = new StringBuilder();
-        }
+            Log(fullLog, EventLogEntryType.Information);
 
+            // Send mail if we freed a connection and email notifications are turned on
+            if (freed.Count() > 0 && Settings[MonitorSettings.EmailNotifications].ToLower().Equals("true"))
+            {
+                var freeMessages = freed.Select(f => new { 
+                    Msg = string.Format("You have been automatically disconnected from Raisers Edge after being idle for {0}.\n\nPlease restart Raiser's Edge to re-connect.\n\nThis is an automated message, please do not respond.", f.AllProcesses.First().IdleTimeFormatted("{h:D2} hour(s), {m:D2} minute(s), {s:D2} second(s), {ms:D2} millisecond(s)")), 
+                    Subject = "Message for " + f.Lock.User.Name + " from Raiser's Edge Connection Monitor",
+                    Email = f.Lock.MachineName.Split(':')[1] + "@unf.edu" });
 
-        void _heartBeat_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            Log("Heart-beat Check", EventLogEntryType.SuccessAudit);
+                // Get recipient list
+                var recipientsList = Settings[MonitorSettings.EmailAddresses].Replace(";", ",");                
+
+                // Get email alias for from address
+                var alias = Settings[MonitorSettings.EmailFromAlias];
+
+                // set up mail client
+                var host = Settings[MonitorSettings.EmailHost];
+
+                string emailLog = "Sending log to " + recipientsList + ".\n" +
+                                    "Sending disconnect email(s) to " + new String(freeMessages.SelectMany(a => a.Email + ", ").ToArray()) + ".\n\n";
+
+                try
+                {
+                    System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(host);
+                    client.Send(alias, recipientsList, "RECM Log", fullLog);
+                    emailLog = "Sent log to " + recipientsList + "\n\n";
+
+                    foreach (var mailMsg in freeMessages)
+                    {
+                        // Un comment this line to send client emails..
+                        //client.Send(alias, mailMsg.Email, mailMsg.Subject, mailMsg.Msg);
+                        emailLog += "To: " + mailMsg.Email + "\nSubject: " + mailMsg.Subject + "\n" + mailMsg.Msg + "\n\n";
+                    }                    
+                }
+                catch(Exception err)
+                {
+                    emailLog += "\n\n" + err.Message + "\n" + err.StackTrace;
+                    Log(emailLog, EventLogEntryType.Error);
+                    return;
+                }
+                Log(emailLog, EventLogEntryType.Information);
+            }                                   
         }
 
         private void Log(string message, EventLogEntryType type)

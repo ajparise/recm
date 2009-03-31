@@ -17,6 +17,9 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
             return this.ExecuteCommand("kill " + process.spid);
         }
 
+        /// <summary>
+        /// All RE Connections - may or may not have an associated SQL process
+        /// </summary>
         public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnections
         {
             get
@@ -26,26 +29,50 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
                     {
                         Lock = l,
                         REProcess = l.sysprocess,
-                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses : null
+                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses.OrderBy(a => a.last_batch) : null
                     });
             }
         }
 
-        public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnections_ClientAliveOnly
+        /// <summary>
+        /// All RE Connections that have an associated SQL process
+        /// </summary>
+        public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnectionsAliveOnly
         {
             get
             {
-                return this.LockConnections.Where(l => l.User.Name != "Shelby" && l.sysprocess != null)
+                return this.LockConnections.Select(l =>
+                    new FilteredLockConnection
+                    {
+                        Lock = l,
+                        REProcess = l.sysprocess,
+                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses.OrderBy(a => a.last_batch) : null
+                    }).Where(l => l.REProcess != null);
+            }
+        }
+
+        /// <summary>
+        /// RE Client Connections that have an associated SQL process
+        /// This may be used as an alternative to calling the clean up stored procedure
+        /// </summary>
+        public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnectionsAliveOnly_ClientOnly
+        {
+            get
+            {
+                return this.LockConnections.Where(l => l.User.Name != "Shelby")
                     .Select(l =>
                     new FilteredLockConnection
                     {
                         Lock = l,
                         REProcess = l.sysprocess,
-                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses : null
-                    });
+                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses.OrderBy( a => a.last_batch) : null
+                    }).Where(l => l.REProcess != null);
             }
         }
 
+        /// <summary>
+        /// RE Client Connections that may or may not have an associated SQL Process
+        /// </summary>
         public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnections_ClientOnly
         {
             get
@@ -56,37 +83,46 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
                     {
                         Lock = l,
                         REProcess = l.sysprocess,
-                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses : null
+                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses.OrderBy(a => a.last_batch) : null
                     });
             }
         }
 
-        public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnections_NetworkAliveOnly
+        /// <summary>
+        /// RE Network Connections that have an associated SQL Process
+        /// Filters network connections by RE User name - "Shelby"
+        /// This may be used as an alternative to calling the clean up stored procedure
+        /// </summary>
+        public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnectionsAliveOnly_NetworkOnly
         {
             get
             {
-                return this.LockConnections.Where(l => l.User.Name == "Shelby" && l.sysprocess != null)
+                return this.LockConnections.Where(l => l.User.Name.ToLower().Contains("Shelby"))
                     .Select(l =>
                     new FilteredLockConnection
                     {
                         Lock = l,
                         REProcess = l.sysprocess,
-                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses : null
-                    });
+                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses.OrderBy(a => a.last_batch) : null
+                    }).Where(l => l.REProcess != null);
             }
         }
 
+        /// <summary>
+        /// RE Network Connections that may or may not have an associated SQL Process
+        /// Filters network connections by RE User name - "Shelby"
+        /// </summary>
         public IEnumerable<FilteredLockConnection> LockConnections_AllActiveREConnections_NetworkOnly
         {
             get
             {
-                return this.LockConnections.Where(l => l.User.Name == "Shelby")
+                return this.LockConnections.Where(l => l.User.Name.ToLower().Contains("Shelby"))
                     .Select(l =>
                     new FilteredLockConnection
                     {
                         Lock = l,
                         REProcess = l.sysprocess,
-                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses : null
+                        AllProcesses = l.sysprocess != null ? l.sysprocess.RelatedProcesses.OrderBy(a => a.last_batch) : null
                     });
             }
         }

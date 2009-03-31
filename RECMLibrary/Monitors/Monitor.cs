@@ -151,7 +151,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
                 // Retrieve entire connection list from DB and order by idle time
                 // ToList() forces LINQ to retrieve data from the server
-                var connectionList = db.LockConnections_AllActiveREConnections_ClientAliveOnly.ToList().OrderByDescending(a => a.REProcess.IdleTime.TotalMilliseconds);
+                var connectionList = db.LockConnections_AllActiveREConnections_ClientOnly.ToList().OrderByDescending(a => a.REProcess.IdleTime.TotalMilliseconds);
 
                 // Get licenses in use (Distinct RE User Names)
                 var inUse = connectionList.Select(l => l.Lock.User).Distinct().Count();
@@ -164,14 +164,23 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
                 if (inUse >= totalLicenseCount)
                 {
-                    // Get candidates that are over the idle limit
-                    var bootCandidates = connectionList.Where(a => a.REProcess.IdleTime.TotalMinutes >= leastMinutesIdle);
+                    // Get exclusion list
+                    var excludedHosts = Settings[MonitorSettings.ExcludedHosts].ToLower();
+                    var excludedREUsers = Settings[MonitorSettings.ExcludedREUsers].ToLower();
+
+                    // Get candidates that are over the idle limit and not excluded
+                    var bootCandidates = connectionList.Where(a => 
+                        !excludedREUsers.Contains(a.Lock.User.Name.ToLower()) &&
+                        !excludedHosts.Contains(a.Lock.MachineName.Split(':')[0].ToLower()) &&
+                        a.AllProcesses.First().IdleTime.TotalMinutes >= leastMinutesIdle);
 
                     // Take enough to free one license - this ensures proper freeing if the service is restarted
                     var bootList = bootCandidates.Take(inUse - totalLicenseCount + 1);
 
                     if (StatusMessage != null)
                         StatusMessage(string.Format("Attempting to free {0} license(s).\n\nBooting {1} of {2} candidates.\n\n", inUse - totalLicenseCount + 1, bootCandidates.Count(), bootList.Count()));
+
+                    var actualBootList = new List<FilteredLockConnection> { };
 
                     foreach (var connection in bootList)
                     {
@@ -205,12 +214,15 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
                                 if (killIt)
                                 {
+                                    // Uncomment the line below to kill the process....
                                     //killResult = db.Kill(process);
 
                                     if (FreedConnection != null)
                                         FreedConnection(new FreedEventArgs(connection, process, killResult));
                                 }
                             }
+
+                            actualBootList.Add(connection);
                         }
                         else
                         {
@@ -220,7 +232,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                     }
 
                     db.Dispose();
-                    return bootList;
+                    return actualBootList;
                 }
                 else
                 {

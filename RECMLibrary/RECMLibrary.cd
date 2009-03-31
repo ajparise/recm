@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.ErrorEventArgs&lt;T&gt;" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Monitors\Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.LockConnectionEventArgs" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Monitors\Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.FreeingEventArgs" Collapsed="true">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Monitors\Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.FreedEventArgs" Collapsed="true">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Monitors\Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor">
+    <Position X="1.25" Y="4" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.FreeingLockEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.OnStatusMessage" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.OnConnectingToDatabase" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.SkippedFreeingConnectionEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.FreedConnectionEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.ErrorEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.DatabaseEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.FreeingConnectionEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.REConnectionMonitor.OnCleanedUpDeadLocks" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Monitors\Monitor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAQAAgAAABAAABAJAAEAQAAAAgAAIAIAAAQA=</HashCode>
+      <FileName>Monitors\Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.TimedREConnectionMonitor">
+    <Position X="4.75" Y="4.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAQAAAAEAYAgAAACAAAAhAohIAgAAAAAAACwA=</HashCode>
+      <FileName>Monitors\TimedServiceMonitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Parise.RaisersEdge.ConnectionMonitor.Monitors.MonitorSettings">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAAAAAAAAAAAIAAAAIAAAAAAIAAAAAAIBAAAABA=</HashCode>
+      <FileName>Monitors\MonitorSettings.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
