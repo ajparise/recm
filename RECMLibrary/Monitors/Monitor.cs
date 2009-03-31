@@ -119,7 +119,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
         #endregion
 
         // Base implementation 
-        public virtual IEnumerable<FilteredLockConnection> FreeConnections()
+        public virtual IEnumerable<FilteredLockConnection> FreeConnections(bool debug)
         {
         try
             {
@@ -214,8 +214,8 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
                                 if (killIt)
                                 {
-                                    // Uncomment the line below to kill the process....
-                                    //killResult = db.Kill(process);
+                                    // This will kill the SQL process
+                                    if (!debug) killResult = db.Kill(process);
 
                                     if (FreedConnection != null)
                                         FreedConnection(new FreedEventArgs(connection, process, killResult));

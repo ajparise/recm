@@ -131,7 +131,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
          */
         public void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            var freed = this.FreeConnections();
+            var freed = this.FreeConnections(false);
 
             var fullLog = logBuffer.ToString();
             logBuffer = new StringBuilder(); // Clear the log buffer
