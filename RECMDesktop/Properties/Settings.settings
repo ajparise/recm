@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Parise.RaisersEdge.ConnectionMonitor.Desktop.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="NumLicenses" Type="System.String" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="LeastMinutesIdle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="PollingInterval" Type="System.String" Scope="User">
+      <Value Profile="(Default)">30000</Value>
+    </Setting>
+    <Setting Name="ExcludedHosts" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ExcludedREUsers" Type="System.String" Scope="User">
+      <Value Profile="(Default)">REAPI Service,</Value>
+    </Setting>
+    <Setting Name="MonitoringEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DBConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=dayton;Initial Catalog=UNFF;Integrated Security=True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

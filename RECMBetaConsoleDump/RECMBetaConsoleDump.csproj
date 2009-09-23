@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FA4B38C0-4E3E-4050-83D9-672542F97186}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{A74E03DE-60C1-4B00-84B0-C7C96607933B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Parise.RaisersEdge.ConnectionMonitor</RootNamespace>
-    <AssemblyName>Parise.RaisersEdge.ConnectionMonitor</AssemblyName>
+    <RootNamespace>RECMBetaConsoleDump</RootNamespace>
+    <AssemblyName>RECMBetaConsoleDump</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -40,13 +40,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -57,48 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FilteredLockConnection.cs" />
-    <Compile Include="Monitors\DesktopMonitor.cs" />
-    <Compile Include="Monitors\MonitorSettings.cs" />
-    <Compile Include="Monitors\TimedServiceMonitor.cs" />
-    <Compile Include="recmPartial.cs" />
-    <Compile Include="recmSettingPartial.cs" />
-    <Compile Include="sysprocessPartial.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Monitors\Monitor.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Recm.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Recm.dbml</DependentUpon>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Recm.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>Recm.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
+    <ProjectReference Include="..\RECMLibrary\RECMLibrary.csproj">
+      <Project>{FA4B38C0-4E3E-4050-83D9-672542F97186}</Project>
+      <Name>RECMLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Recm.dbml.layout">
-      <DependentUpon>Recm.dbml</DependentUpon>
-    </None>
-    <None Include="RECMLibrary.cd" />
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

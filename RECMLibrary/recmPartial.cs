@@ -77,6 +77,9 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Data
         {
             get
             {
+                //this.LoadOptions.LoadWith<LockConnection>(a => a.sysprocess);
+                //this.LoadOptions.LoadWith<sysprocess>(a => a.RelatedProcesses);
+                //this.LoadOptions.AssociateWith<User>(l => l.Name != "Shelby");
                 return this.LockConnections.Where(l => l.User.Name != "Shelby")
                     .Select(l =>
                     new FilteredLockConnection

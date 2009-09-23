@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.625, 9.75" name="Recm">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.875, 8.5" name="Recm">
   <DataContextMoniker Name="/RecmDataContext" />
   <nestedChildShapes>
-    <classShape Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" absoluteBounds="4.875, 1.375, 2, 2.3478011067708335">
+    <classShape Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" absoluteBounds="5.75, 2.5, 2, 2.3478011067708335">
       <DataClassMoniker Name="/RecmDataContext/LockConnection" />
       <nestedChildShapes>
-        <elementListCompartment Id="da12def0-1b3b-4123-bf8c-0c4b0eb3af53" absoluteBounds="4.89, 1.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="da12def0-1b3b-4123-bf8c-0c4b0eb3af53" absoluteBounds="5.765, 2.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="80bbd3fe-0e42-4016-bc92-236ae151e665" absoluteBounds="8.625, 1.375, 2.75, 2.3478011067708335">
+    <classShape Id="80bbd3fe-0e42-4016-bc92-236ae151e665" absoluteBounds="8.875, 2.375, 2.75, 2.3478011067708335">
       <DataClassMoniker Name="/RecmDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="e8b420d7-c2a5-4992-a8ec-84dc241a0e97" absoluteBounds="8.64, 1.835, 2.7199999999999998, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e8b420d7-c2a5-4992-a8ec-84dc241a0e97" absoluteBounds="8.89, 2.835, 2.7199999999999998, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.625 : 2.54890055338542); (6.875 : 2.54890055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.875 : 3.61140055338542); (7.75 : 3.61140055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RecmDataContext/User/User_LockConnection" />
       <nodes>
         <classShapeMoniker Id="80bbd3fe-0e42-4016-bc92-236ae151e665" />
         <classShapeMoniker Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" />
       </nodes>
     </associationConnector>
-    <classShape Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" absoluteBounds="0.625, 2, 2, 6.9630354817708326">
+    <classShape Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" absoluteBounds="2.875, 0.5, 2, 6.9630354817708326">
       <DataClassMoniker Name="/RecmDataContext/sysprocess" />
       <nestedChildShapes>
-        <elementListCompartment Id="c84cfc41-b8df-491b-b944-5d767bff18ee" absoluteBounds="0.64000000000000057, 2.46, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c84cfc41-b8df-491b-b944-5d767bff18ee" absoluteBounds="2.8900000000000006, 0.96, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.625 : 2.86140055338542); (4.875 : 2.86140055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.875 : 3.67390055338542); (5.75 : 3.67390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RecmDataContext/sysprocess/sysprocess_LockConnection" />
       <nodes>
         <classShapeMoniker Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" />
         <classShapeMoniker Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.33423076923077 : 8.96303548177083); (1.33423076923077 : 9.21303548177083); (1.92961538461538 : 9.21303548177083); (1.92961538461538 : 8.96303548177083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(3.58423076923077 : 7.46303548177083); (3.58423076923077 : 7.71303548177083); (4.17961538461539 : 7.71303548177083); (4.17961538461539 : 7.46303548177083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RecmDataContext/sysprocess/sysprocess_sysprocess" />
       <nodes>
         <classShapeMoniker Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" />

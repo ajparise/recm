@@ -167,7 +167,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                     foreach (var mailMsg in freeMessages)
                     {
                         // Un comment this line to send client emails..
-                        //client.Send(alias, mailMsg.Email, mailMsg.Subject, mailMsg.Msg);
+                        client.Send(alias, "n00148922@unf.edu", mailMsg.Subject, mailMsg.Msg);
                         emailLog += "To: " + mailMsg.Email + "\nSubject: " + mailMsg.Subject + "\n" + mailMsg.Msg + "\n\n";
                     }                    
                 }

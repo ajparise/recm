@@ -40,7 +40,7 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.Description = "Monitors and Manages Idle Raisers Edge SQL Connections";
-            this.serviceInstaller1.DisplayName = "Parise Raisers Edge Connection Monitor";
+            this.serviceInstaller1.DisplayName = "Parise Raisers Edge Connection Monitor v2";
             this.serviceInstaller1.ServiceName = "RE Connection Monitor (AJ Parise)";
             // 
             // ProjectInstaller

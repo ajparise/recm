@@ -62,7 +62,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
     /// <summary>
     /// Wraps monitor functionality
     /// </summary>
-    public partial class REConnectionMonitor
+    public partial class REConnectionMonitor : IDisposable
     {        
         /// <summary>
         /// Constructor
@@ -129,7 +129,8 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                 if (ConnectingToDatabase != null)
                     ConnectingToDatabase(ref connectionString);
 
-                var db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext();
+                var db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext(connectionString);
+                    db.Log = Console.Out;
 
                 if (ConnectedToDatabase != null)
                     ConnectedToDatabase(db);
@@ -151,8 +152,10 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
                 // Retrieve entire connection list from DB and order by idle time
                 // ToList() forces LINQ to retrieve data from the server
-                var connectionList = db.LockConnections_AllActiveREConnections_ClientOnly.ToList().OrderByDescending(a => a.REProcess.IdleTime.TotalMilliseconds);
+                //StatusMessage(db.GetCommand(db.LockConnections_AllActiveREConnections_ClientOnly.AsQueryable()).CommandText);
 
+                var connectionList = db.LockConnections_AllActiveREConnections_ClientOnly.OrderByDescending(a => a.REProcess.IdleTime.TotalMilliseconds);
+            
                 // Get licenses in use (Distinct RE User Names)
                 var inUse = connectionList.Select(l => l.Lock.User).Distinct().Count();
 
@@ -189,45 +192,50 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
                         // Refresh the current status of the process and related items                    
                         var freshProcess = connection.REProcess;
-                        db.Refresh(RefreshMode.OverwriteCurrentValues, connection.REProcess);
-
-                        // We only want to kill sleeping processes!!!
-                        var sleepingCount = freshProcess.RelatedProcesses.Where(p => p.status.Trim().Equals("sleeping", StringComparison.CurrentCultureIgnoreCase)).Count();
-                        if (sleepingCount == freshProcess.RelatedProcesses.Count)
+                        try
                         {
-                            //loggableEntry += connection.Lock.MachineName + " -- " + connection.Lock.User.Name + " -- " + connection.REProcess.hostname + "\n";
-                            //"\tIssued kill " + process.spid + " -- " + process.program_name.Trim() + " -- " + process.status.Trim() + " -- " + process.IdleTimeFormatted("{h:D2}:{m:D2}:{s:D2}:{ms:D2}\n");
-                            foreach (var process in freshProcess.RelatedProcesses)
+                            db.Refresh(RefreshMode.OverwriteCurrentValues, connection.REProcess);
+                            // We only want to kill sleeping processes!!!
+                            var sleepingCount = freshProcess.RelatedProcesses.Where(p => p.status.Trim().Equals("sleeping", StringComparison.CurrentCultureIgnoreCase)).Count();
+                            if (sleepingCount == freshProcess.RelatedProcesses.Count)
                             {
-
-                                var killResult = 99;
-
-                                //uncomment the line below to terminate a process.
-                                bool killIt = true;
-
-                                if (FreeingConnection != null)
+                                //loggableEntry += connection.Lock.MachineName + " -- " + connection.Lock.User.Name + " -- " + connection.REProcess.hostname + "\n";
+                                //"\tIssued kill " + process.spid + " -- " + process.program_name.Trim() + " -- " + process.status.Trim() + " -- " + process.IdleTimeFormatted("{h:D2}:{m:D2}:{s:D2}:{ms:D2}\n");
+                                foreach (var process in freshProcess.RelatedProcesses)
                                 {
-                                    var args = new FreeingEventArgs(connection, process);
-                                    FreeingConnection(args);
-                                    killIt = !args.Cancel;
+
+                                    var killResult = 99;
+                                    bool killIt = true;
+
+                                    if (FreeingConnection != null)
+                                    {
+                                        var args = new FreeingEventArgs(connection, process);
+                                        FreeingConnection(args);
+                                        killIt = !args.Cancel;
+                                    }
+
+                                    if (killIt)
+                                    {
+                                        // This will kill the SQL process
+                                        if (!debug) killResult = db.Kill(process);
+
+                                        if (FreedConnection != null)
+                                            FreedConnection(new FreedEventArgs(connection, process, killResult));
+                                    }
                                 }
 
-                                if (killIt)
-                                {
-                                    // This will kill the SQL process
-                                    if (!debug) killResult = db.Kill(process);
-
-                                    if (FreedConnection != null)
-                                        FreedConnection(new FreedEventArgs(connection, process, killResult));
-                                }
+                                actualBootList.Add(connection);
                             }
-
-                            actualBootList.Add(connection);
+                            else
+                            {
+                                if (SkippedFreeingConnection != null)
+                                    SkippedFreeingConnection("Some related processes are active.", new FreeingEventArgs(connection, connection.REProcess));
+                            }
                         }
-                        else
+                        catch (Exception err)
                         {
-                            if (SkippedFreeingConnection != null)
-                                SkippedFreeingConnection("Some related processes are active.", new FreeingEventArgs(connection, connection.REProcess));
+                            if (GenericError != null)
+                                GenericError(new ErrorEventArgs<Exception>(err));
                         }
                     }
 
@@ -248,5 +256,14 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                 return new List<FilteredLockConnection> { };
             }
         }
+
+        #region IDisposable Members
+
+        public virtual void Dispose()
+        {
+            Settings.Clear();
+        }
+
+        #endregion
     }
 }
