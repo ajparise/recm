@@ -192,12 +192,12 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Desktop
 
         private int GetImageIndex(FilteredLockConnection a)
         {
-            var pi = Math.Round((((float)a.REProcess.IdleTime.TotalMinutes / float.Parse(Properties.Settings.Default.LeastMinutesIdle)) * 100.0), 0);
+            var pi = Math.Round((((float)a.AllProcesses.First().IdleTime.TotalMinutes / float.Parse(Properties.Settings.Default.LeastMinutesIdle)) * 100.0), 0);
             if (pi >= 100.0)
             {
                 return 2;
             }
-            else if (Properties.Settings.Default.ExcludedREUsers.Contains(a.Lock.User.Name) || Properties.Settings.Default.ExcludedHosts.Contains(a.Lock.MachineName))
+            else if (Properties.Settings.Default.ExcludedREUsers.Contains(a.Lock.User.Name) || Properties.Settings.Default.ExcludedHosts.Contains(a.Lock.HostName))
             {
                 return 3;
             }
@@ -223,7 +223,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Desktop
 
                     var db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext(Properties.Settings.Default.DBConnectionString);
 
-                    var currentInUse = db.LockConnections_AllActiveREConnectionsAliveOnly_ClientOnly.Select(a => a.Lock.User.Name).Distinct().Count();
+                    var currentInUse = db.LockConnections_AllActiveREConnections_ClientOnly.Count();
 
                     if (currentInUse != lastActiveCount || settingsChanged)
                     {
@@ -241,12 +241,12 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Desktop
                         //if (Properties.Settings.Default.MonitoringEnabled) _monitor.FreeConnections(true);                                        
 
 
-                        var locks = db.LockConnections_AllActiveREConnections_ClientOnly.OrderByDescending(a => a.REProcess.IdleTime.TotalMilliseconds).ToList();
+                        var locks = db.LockConnections_AllActiveREConnections_ClientOnly.OrderByDescending(a => a.AllProcesses.First().IdleTime.TotalMilliseconds).ToList();
                         var listItems = locks
                         .Select(a =>
                             new ListViewItem()
                         {
-                            Text = a.Lock.User.Name + " - " + a.REProcess.IdleTimeFormatted("{h:D2}:{m:D2}:{s:D2}"),
+                            Text = a.Lock.User.Name + " - " + a.AllProcesses.First().IdleTimeFormatted("{h:D2}:{m:D2}:{s:D2}"),
                             ImageIndex = GetImageIndex(a),
                             Group = lstViewLicenses.Groups[GetImageIndex(a) - 1]
                         });
@@ -479,7 +479,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Desktop
                 else
                 {
                     var db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext(Properties.Settings.Default.DBConnectionString);
-                    db.LockConnections.Count();
+                    db.LockConnections_AllActiveREConnections_ClientOnly.Count();
                     e.Result = db;
                 }
             }

@@ -20,7 +20,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
             using ( var db = new Parise.RaisersEdge.ConnectionMonitor.Data.RecmDataContext(base.Settings[MonitorSettings.DBConnectionString]) )
             {
-                activeCount = db.LockConnections_AllActiveREConnectionsAliveOnly_ClientOnly.Select(a => a.Lock.User.Name).Distinct().Count();
+                activeCount = db.LockConnections_AllActiveREConnections.Count();
             }
 
             return activeCount;

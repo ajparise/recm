@@ -90,7 +90,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
 
         void TimedREConnectionMonitor_FreeingLock(FilteredLockConnection connection)
         {
-            logBuffer.AppendFormat("\nFreeing connections from lock {0} -- {1} -- {2}\n", connection.Lock.MachineName, connection.Lock.User.Name, connection.REProcess.hostname);
+            logBuffer.AppendFormat("\nFreeing connections from lock {0} -- {1} -- {2}\n", connection.Lock.HostName, connection.Lock.User.Name, connection.AllProcesses.First().hostname);
         }
 
         void TimedREConnectionMonitor_FreeingConnection(FreeingEventArgs e)
@@ -144,7 +144,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                 var freeMessages = freed.Select(f => new { 
                     Msg = string.Format("You have been automatically disconnected from Raisers Edge after being idle for {0}.\n\nPlease restart Raiser's Edge to re-connect.\n\nThis is an automated message, please do not respond.", f.AllProcesses.First().IdleTimeFormatted("{h:D2} hour(s), {m:D2} minute(s), {s:D2} second(s), {ms:D2} millisecond(s)")), 
                     Subject = "Message for " + f.Lock.User.Name + " from Raiser's Edge Connection Monitor",
-                    Email = f.Lock.MachineName.Split(':')[1] + "@unf.edu" });
+                    Email = f.Lock.HostName.Split(':')[1] + "@unf.edu" });
 
                 // Get recipient list
                 var recipientsList = Settings[MonitorSettings.EmailAddresses].Replace(";", ",");                

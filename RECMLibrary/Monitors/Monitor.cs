@@ -140,13 +140,13 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                 // Clean up dead connection locks - very important
                 // Affects the dbo.LOCKCONNECTIONS table
 
-                if (CleaningUpDeadLocks != null)
-                    CleaningUpDeadLocks(db);
+                //if (CleaningUpDeadLocks != null)
+                //    CleaningUpDeadLocks(db);
 
-                var spResult = db.CleanupDeadConnectionLocks();
+                //var spResult = db.CleanupDeadConnectionLocks();
 
-                if (CleanedUpDeadLocks != null)
-                    CleanedUpDeadLocks(spResult);
+                //if (CleanedUpDeadLocks != null)
+                //    CleanedUpDeadLocks(spResult);
                 
                 #endregion
 
@@ -154,7 +154,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                 // ToList() forces LINQ to retrieve data from the server
                 //StatusMessage(db.GetCommand(db.LockConnections_AllActiveREConnections_ClientOnly.AsQueryable()).CommandText);
 
-                var connectionList = db.LockConnections_AllActiveREConnections_ClientOnly.OrderByDescending(a => a.REProcess.IdleTime.TotalMilliseconds);
+                IEnumerable<FilteredLockConnection> connectionList = db.LockConnections_AllActiveREConnections.OrderByDescending(a => a.AllProcesses.First().IdleTime.TotalMilliseconds);
             
                 // Get licenses in use (Distinct RE User Names)
                 var inUse = connectionList.Select(l => l.Lock.User).Distinct().Count();
@@ -174,7 +174,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                     // Get candidates that are over the idle limit and not excluded
                     var bootCandidates = connectionList.Where(a => 
                         !excludedREUsers.Contains(a.Lock.User.Name.ToLower()) &&
-                        !excludedHosts.Contains(a.Lock.MachineName.Split(':')[0].ToLower()) &&
+                        !excludedHosts.Contains(a.Lock.HostName.Split(':')[0].ToLower()) &&
                         a.AllProcesses.First().IdleTime.TotalMinutes >= leastMinutesIdle);
 
                     // Take enough to free one license - this ensures proper freeing if the service is restarted
@@ -191,10 +191,10 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                             FreeingLock(connection);
 
                         // Refresh the current status of the process and related items                    
-                        var freshProcess = connection.REProcess;
+                        var freshProcess = connection.AllProcesses.First();
                         try
                         {
-                            db.Refresh(RefreshMode.OverwriteCurrentValues, connection.REProcess);
+                            db.Refresh(RefreshMode.OverwriteCurrentValues, freshProcess);
                             // We only want to kill sleeping processes!!!
                             var sleepingCount = freshProcess.RelatedProcesses.Where(p => p.status.Trim().Equals("sleeping", StringComparison.CurrentCultureIgnoreCase)).Count();
                             if (sleepingCount == freshProcess.RelatedProcesses.Count)
@@ -229,7 +229,7 @@ namespace Parise.RaisersEdge.ConnectionMonitor.Monitors
                             else
                             {
                                 if (SkippedFreeingConnection != null)
-                                    SkippedFreeingConnection("Some related processes are active.", new FreeingEventArgs(connection, connection.REProcess));
+                                    SkippedFreeingConnection("Some related processes are active.", new FreeingEventArgs(connection, connection.AllProcesses.First()));
                             }
                         }
                         catch (Exception err)

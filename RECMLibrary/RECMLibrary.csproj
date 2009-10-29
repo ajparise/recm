@@ -57,16 +57,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoginAuditPartial.cs" />
     <Compile Include="FilteredLockConnection.cs" />
-    <Compile Include="Monitors\DesktopMonitor.cs" />
-    <Compile Include="Monitors\MonitorSettings.cs" />
-    <Compile Include="Monitors\TimedServiceMonitor.cs" />
+    <Compile Include="Monitors\DesktopMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitors\Monitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitors\MonitorSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitors\TimedServiceMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="recmPartial.cs" />
     <Compile Include="recmSettingPartial.cs" />
     <Compile Include="sysprocessPartial.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Monitors\Monitor.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

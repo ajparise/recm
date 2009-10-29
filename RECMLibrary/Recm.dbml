@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="UNFF" EntityNamespace="Parise.RaisersEdge.ConnectionMonitor.Data.Entities" ContextNamespace="Parise.RaisersEdge.ConnectionMonitor.Data" Class="RecmDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=dayton;Initial Catalog=UNFF;Integrated Security=True" SettingsObjectName="Parise.RaisersEdge.ConnectionMonitor.Properties.Settings" SettingsPropertyName="ServerConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.LOCKCONNECTIONS" Member="LockConnections">
-    <Type Name="LockConnection">
-      <Column Name="LOCKCONNECTIONSID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CONNECTIONID" Member="ConnectionID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
-      <Column Name="MACHINENAME" Member="MachineName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="USER_ID" Member="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MODULENUM" Member="ModuleNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DESCRIPTION" Member="Description" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="spid" Member="SQLProcessID" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
-      <Column Name="LOGIN_TIME" Member="LoginTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="User_LockConnection" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
-      <Association Name="sysprocess_LockConnection" Member="sysprocess" ThisKey="SQLProcessID" OtherKey="spid" Type="sysprocess" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.USERS" Member="Users">
     <Type Name="User">
       <Column Name="NAME" Member="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
@@ -25,7 +11,7 @@
       <Column Name="SID" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="UseRE7Authentication" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
       <Column Name="UseWindowsAuthentication" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Association Name="User_LockConnection" Member="LockConnections" ThisKey="ID" OtherKey="UserID" Type="LockConnection" />
+      <Association Name="User_LoginAudit" Member="LoginAudits" ThisKey="ID" OtherKey="UserID" Type="LoginAudit" />
     </Type>
   </Table>
   <Table Name="master.dbo.sysprocesses" Member="sysprocesses">
@@ -62,12 +48,21 @@
       <Column Name="stmt_start" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="stmt_end" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="request_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="sysprocess_LockConnection" Member="LockConnections" ThisKey="spid" OtherKey="SQLProcessID" Type="LockConnection" />
       <Association Name="sysprocess_sysprocess" Member="RelatedProcesses" ThisKey="hostname,loginame" OtherKey="hostname,loginame" Type="sysprocess" />
       <Association Name="sysprocess_sysprocess" Member="ParentProcess" ThisKey="hostname,loginame" OtherKey="hostname,loginame" Type="sysprocess" IsForeignKey="true" />
     </Type>
   </Table>
-  <Function Name="dbo.CleanupDeadConnectionLocks" Method="CleanupDeadConnectionLocks">
-    <Return Type="System.Int32" />
-  </Function>
+  <Table Name="dbo.LOGINAUDIT" Member="LoginAudits">
+    <Type Name="LoginAudit">
+      <Column Name="LOGINCONNECTIONID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MACHINENAME" Member="HostName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="USER_ID" Member="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="USER_NAME" Member="UserName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="MODULENUM" Member="ModuleNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPTION" Member="Description" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LOGIN_TIME" Member="LoginTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LOGOUT_TIME" Member="LogoutTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_LoginAudit" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
 </Database>

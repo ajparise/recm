@@ -2,43 +2,36 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.875, 8.5" name="Recm">
   <DataContextMoniker Name="/RecmDataContext" />
   <nestedChildShapes>
-    <classShape Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" absoluteBounds="5.75, 2.5, 2, 2.3478011067708335">
-      <DataClassMoniker Name="/RecmDataContext/LockConnection" />
-      <nestedChildShapes>
-        <elementListCompartment Id="da12def0-1b3b-4123-bf8c-0c4b0eb3af53" absoluteBounds="5.765, 2.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="80bbd3fe-0e42-4016-bc92-236ae151e665" absoluteBounds="8.875, 2.375, 2.75, 2.3478011067708335">
       <DataClassMoniker Name="/RecmDataContext/User" />
       <nestedChildShapes>
         <elementListCompartment Id="e8b420d7-c2a5-4992-a8ec-84dc241a0e97" absoluteBounds="8.89, 2.835, 2.7199999999999998, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.875 : 3.61140055338542); (7.75 : 3.61140055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/RecmDataContext/User/User_LockConnection" />
-      <nodes>
-        <classShapeMoniker Id="80bbd3fe-0e42-4016-bc92-236ae151e665" />
-        <classShapeMoniker Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" />
-      </nodes>
-    </associationConnector>
     <classShape Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" absoluteBounds="2.875, 0.5, 2, 6.9630354817708326">
       <DataClassMoniker Name="/RecmDataContext/sysprocess" />
       <nestedChildShapes>
         <elementListCompartment Id="c84cfc41-b8df-491b-b944-5d767bff18ee" absoluteBounds="2.8900000000000006, 0.96, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.875 : 3.67390055338542); (5.75 : 3.67390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/RecmDataContext/sysprocess/sysprocess_LockConnection" />
-      <nodes>
-        <classShapeMoniker Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" />
-        <classShapeMoniker Id="14fc0fef-9578-40a6-a3b6-c48f59299cf0" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(3.58423076923077 : 7.46303548177083); (3.58423076923077 : 7.71303548177083); (4.17961538461539 : 7.71303548177083); (4.17961538461539 : 7.46303548177083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RecmDataContext/sysprocess/sysprocess_sysprocess" />
       <nodes>
         <classShapeMoniker Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" />
         <classShapeMoniker Id="56ec2493-4b34-4f74-a6ff-3b0d54592756" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a22f28e1-c739-4231-8980-0a4fc4c04deb" absoluteBounds="6, 2.375, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/RecmDataContext/LoginAudit" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4a16848e-b785-4ae6-8f11-1ddd28319003" absoluteBounds="6.015, 2.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.875 : 3.54890055338542); (8 : 3.54890055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RecmDataContext/User/User_LoginAudit" />
+      <nodes>
+        <classShapeMoniker Id="80bbd3fe-0e42-4016-bc92-236ae151e665" />
+        <classShapeMoniker Id="a22f28e1-c739-4231-8980-0a4fc4c04deb" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
